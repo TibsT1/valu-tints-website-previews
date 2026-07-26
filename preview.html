@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Valu Tints — Latest Website Preview</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:#111936}
+body{display:flex;flex-direction:column}
+.preview-bar{
+  min-height:64px;background:#0d1c4d;color:#fff;display:flex;align-items:center;
+  gap:18px;padding:10px 18px;border-bottom:3px solid #f5ce20;flex-wrap:wrap
+}
+.brand{font-weight:900;white-space:nowrap}
+.brand span{color:#f5ce20}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tabs button{
+  border:1px solid rgba(255,255,255,.25);background:#142b72;color:#fff;
+  padding:9px 14px;font-weight:800;cursor:pointer
+}
+.tabs button.active,.tabs button:hover{background:#fff;color:#142b72}
+.device-controls{margin-left:auto;display:flex;gap:8px}
+.device-controls button{
+  border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;
+  padding:8px 11px;cursor:pointer
+}
+.device-controls button.active{background:#f5ce20;color:#111936;border-color:#f5ce20}
+.stage{flex:1;display:flex;justify-content:center;align-items:stretch;padding:0;background:#cfd5e2;overflow:auto}
+.frame-wrap{
+  width:100%;min-height:100%;background:#fff;transition:width .2s ease;
+  box-shadow:0 0 40px rgba(0,0,0,.22)
+}
+.frame-wrap.mobile{width:390px;margin:18px 0;min-height:780px}
+.frame-wrap.tablet{width:768px;margin:18px 0;min-height:900px}
+iframe{border:0;width:100%;height:100%;min-height:calc(100vh - 67px);display:block;background:#fff}
+.frame-wrap.mobile iframe,.frame-wrap.tablet iframe{min-height:900px}
+@media(max-width:720px){
+  .preview-bar{align-items:flex-start}
+  .device-controls{display:none}
+  .tabs{width:100%}
+  .tabs button{flex:1}
+}
+</style>
+</head>
+<body>
+<header class="preview-bar">
+  <div class="brand">Valu Tints <span>v3 preview</span></div>
+  <div class="tabs">
+    <button class="active" data-page="index.html">Home</button>
+    <button data-page="about.html">About</button>
+    <button data-page="services.html">Services</button>
+    <button data-page="contact.html">Contact</button>
+  </div>
+  <div class="device-controls">
+    <button class="active" data-device="desktop">Desktop</button>
+    <button data-device="tablet">Tablet</button>
+    <button data-device="mobile">Phone</button>
+  </div>
+</header>
+
+<main class="stage">
+  <div class="frame-wrap" id="frameWrap">
+    <iframe id="siteFrame" src="index.html" title="Valu Tints website preview"></iframe>
+  </div>
+</main>
+
+<script>
+const frame = document.getElementById('siteFrame');
+const wrap = document.getElementById('frameWrap');
+
+document.querySelectorAll('[data-page]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-page]').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active');
+    frame.src = btn.dataset.page;
+  });
+});
+
+document.querySelectorAll('[data-device]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-device]').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active');
+    wrap.className = 'frame-wrap';
+    if (btn.dataset.device !== 'desktop') wrap.classList.add(btn.dataset.device);
+  });
+});
+</script>
+</body>
+</html>
